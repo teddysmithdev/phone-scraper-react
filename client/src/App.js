@@ -7,7 +7,7 @@ export default class App extends Component {
     fname: '',
     lname: '',
     areaCode: '',
-    results: ''
+    results: []
   }
 
 
@@ -33,7 +33,7 @@ export default class App extends Component {
     const { fname, lname, areaCode, results } = this.state;
     return (
       <div className="container">
-        <h1>Phone Number Scraper</h1>
+        <h1>Phone Number Finder</h1>
         <form onSubmit={this.submitHandler}>
             <input
               type="text"
@@ -57,7 +57,7 @@ export default class App extends Component {
               placeholder="areacode"
             />
             <button type="submit">Submit</button>
-            {results}
+            <NumberList results={this.state.results} />
           </form>
       </div>
     )
