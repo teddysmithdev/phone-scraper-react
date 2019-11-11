@@ -4,7 +4,6 @@ const request = require('request');
 const cors = require('cors')
 const app = express();
 
-app.use(express.static(__dirname + '/public'));
 
 
 app.get('/api', cors(), (req, res) => {
@@ -27,6 +26,8 @@ app.get('/api', cors(), (req, res) => {
          res.send(descriptionGrab)   
         })
     });
+
+
 
 
 const PORT = process.env.PORT || 5000
