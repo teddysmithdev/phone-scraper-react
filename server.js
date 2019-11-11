@@ -30,6 +30,4 @@ app.get('/api', cors(), (req, res) => {
 
 
 const PORT = process.env.PORT || 5000
-app.listen(PORT, () =>  {
-  console.log('Your app is listening on port ' + listener.address().port);
-});
+app.listen(PORT)
