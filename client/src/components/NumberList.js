@@ -2,10 +2,10 @@ import React from 'react'
 
 const NumberList = (props) => {
     const displayNum = props.results.map(numbers => {
-       return <li>{numbers}</li> 
+       return <li className="list-group-item">{numbers}</li> 
     })
     return (
-        <div>
+        <div className="mt-3">
             <h2>Numbers Found:</h2>
             {displayNum}
         </div>

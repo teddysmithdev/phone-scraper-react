@@ -1,6 +1,9 @@
 import React, { Component } from 'react'
 import axios from 'axios';
-import NumberList from './NumberList'
+import NumberList from './../src/components/NumberList'
+import NavBar from './../src/components/NavBar'
+import Header from './components/Header'
+import Grid from './components/Grid'
 
 export default class App extends Component {
   state = {
@@ -17,8 +20,6 @@ export default class App extends Component {
 
 
   submitHandler = e => {
-    
-
     e.preventDefault()
     axios
     .get(`http://localhost:5000/api?first=${this.state.fname}&last=${this.state.lname}&areacode=${this.state.areaCode}`)
@@ -30,36 +31,49 @@ export default class App extends Component {
 
  
   render() {
-    const { fname, lname, areaCode, results } = this.state;
+    const { fname, lname, areaCode } = this.state;
     return (
+      <>
+      <NavBar />
+      <Header />
+      <div classname="overlay"></div>
       <div className="container">
-        <h1>Phone Number Finder</h1>
-        <form onSubmit={this.submitHandler}>
+      <form onSubmit={this.submitHandler}>
+        <div class="form-group mt-3">
+        <label for="exampleInputEmail1"><h4>First Name</h4></label>
             <input
               type="text"
               name="fname"
               value={fname}
               onChange={this.onChange}
-              placeholder="fname"
+              class="form-control"
             />
+        </div>
+        <div class="form-group">
+        <label for="exampleInputPassword1"><h4>Last Name</h4></label>
             <input
               type="text"
               name="lname"
               value={lname}
               onChange={this.onChange}
-              placeholder="lname"
+              class="form-control"
             />
+          </div>
+          <div class="form-group">
+          <label for="exampleInputPassword1"><h4>Area Code</h4></label>
             <input
               type="text"
               name="areaCode"
               value={areaCode}
               onChange={this.onChange}
-              placeholder="areacode"
+              class="form-control"
             />
-            <button type="submit">Submit</button>
+            </div>
+            <button class="btn btn-primary" type="submit">Submit</button>
             <NumberList results={this.state.results} />
           </form>
-      </div>
+          </div>
+      </>
     )
   }
 }

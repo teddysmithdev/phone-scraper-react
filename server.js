@@ -29,7 +29,7 @@ app.get('/api', cors(), (req, res) => {
     });
 
 
-// listen for requests :)
-const listener = app.listen(5000, function() {
+const PORT = process.env.PORT || 5000
+app.listen(PORT, () =>  {
   console.log('Your app is listening on port ' + listener.address().port);
 });
