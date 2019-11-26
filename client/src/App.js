@@ -1,16 +1,18 @@
 import React, { Component } from 'react'
+import './App.css'
 import axios from 'axios';
-import NumberList from './../src/components/NumberList'
-import NavBar from './../src/components/NavBar'
-import Header from './components/Header'
-import Grid from './components/Grid'
+import NumberList from './components/NumberList'
+import EmailList from './components/EmailList'
+import NavBar from './components/NavBar'
+
 
 export default class App extends Component {
   state = {
-    fname: '',
-    lname: '',
+    name: '',
+    location: '',
     areaCode: '',
-    results: []
+    phoneResults: [],
+    emailResults: []
   }
 
 
@@ -22,57 +24,89 @@ export default class App extends Component {
   submitHandler = e => {
     e.preventDefault()
     axios
-    .get(`http://localhost:5000/api?first=${this.state.fname}&last=${this.state.lname}&areacode=${this.state.areaCode}`)
+    .get(`http://localhost:5000/api?name=${this.state.name}&location=${this.state.location}&areacode=${this.state.areaCode}`)
     .then(data => {
-      this.setState({ results: data.data.numbers })
+      this.setState({ phoneResults: data.data.numbers, emailResults: data.data.emails  }, console.log(data))
     }).catch(err => console.log(err))
-    console.log(this.state.results)
   }
 
  
   render() {
-    const { fname, lname, areaCode } = this.state;
+    const { name, location, areaCode } = this.state;
     return (
       <>
       <NavBar />
-      <Header />
-      <div classname="overlay"></div>
-      <div className="container">
-      <form onSubmit={this.submitHandler}>
-        <div class="form-group mt-3">
-        <label for="exampleInputEmail1"><h4>First Name</h4></label>
-            <input
-              type="text"
-              name="fname"
-              value={fname}
-              onChange={this.onChange}
-              class="form-control"
-            />
-        </div>
-        <div class="form-group">
-        <label for="exampleInputPassword1"><h4>Last Name</h4></label>
-            <input
-              type="text"
-              name="lname"
-              value={lname}
-              onChange={this.onChange}
-              class="form-control"
-            />
-          </div>
-          <div class="form-group">
-          <label for="exampleInputPassword1"><h4>Area Code</h4></label>
-            <input
-              type="text"
-              name="areaCode"
-              value={areaCode}
-              onChange={this.onChange}
-              class="form-control"
-            />
+      <div className="banner d-flex align-items-center pl-3 pl-lg-5">
+        <div>
+          <h1 className="text-capitalize text-white">Free Phone</h1>
+          <h1 className="text-uppercase font-weight-bold text-white">Search Engine</h1>
+            <form onSubmit={this.submitHandler}>
+              <div class="input-group mt-3">
+                <span class="input-group-text">Name</span>
+                  <input
+                    type="text"
+                    name="name"
+                    value={name}
+                    onChange={this.onChange}
+                    class="form-control"
+                  />
+              </div>
+            <div class="input-group mt-2">
+                <span class="input-group-text">Location</span>
+                  <input
+                    type="text"
+                    name="location"
+                    value={location}
+                    onChange={this.onChange}
+                    class="form-control"
+                  />
+              </div>
+          <div class="input-group mt-2">
+                <span class="input-group-text">Area Code</span>
+                  <input
+                    type="text"
+                    name="areaCode"
+                    value={areaCode}
+                    onChange={this.onChange}
+                    class="form-control"
+                  />
             </div>
-            <button class="btn btn-primary" type="submit">Submit</button>
-            <NumberList results={this.state.results} />
-          </form>
+            <button className="btn btn-primary mt-2" type="submit">Submit</button>
+           </form> 
+        </div>
+      </div>
+      {/* Search Results */}
+      <section className="totals py-3">
+        <div className="container-fluid">
+          <div className="row">
+            <div className="col text-center text-uppercase">
+              <div className="row my-3">
+                {/* Single Column */}
+                <div className="col-6 mx-auto col-md-2 px-3">
+                  <h5>Phone Results</h5>
+                  <NumberList phoneResults={this.state.phoneResults} />
+                </div>
+                <div className="col-6 mx-auto col-md-2">
+                  <h5>Email Results</h5>
+                  <EmailList emailResults={this.state.emailResults}/>
+                </div>
+              </div>
+            </div>
           </div>
+        </div>
+      </section>
+
+      {/* Banner Info */}
+      <section className="featured py-5">
+        <div className="container">
+          <div className="row my-3">
+            <div className="col-10 mx-auto text-center">
+              <h1>No Expensive Software Needed!</h1>
+              <p className="text-muted">Bootstrap your pipeline and meet the people you need.</p>
+            </div>
+          </div>
+        </div>
+      </section>
       </>
     )
   }
